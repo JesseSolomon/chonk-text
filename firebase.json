@@ -8,6 +8,10 @@
     ],
     "rewrites": [
       {
+        "source": "**/preview.svg",
+        "function": "preview"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }
