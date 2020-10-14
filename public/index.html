@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>C H O N K</title>
+		<meta name="description" content="Make your text stand out by making it C H O N K Y">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="shortcut icon" href="hi.svg">
+		<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@700&display=swap" rel="stylesheet">
+		<style>
+			body {
+				margin: 0;
+				font-family: "Work Sans", sans-serif;
+				background-color: #F44336;
+				height: 100vh;
+				overflow: hidden;
+				color: #fff;
+				position: relative;
+			}
+
+			#github {
+				position: absolute;
+				bottom: 32px;
+				left: 32px;
+				display: inline-flex;
+			}
+
+			#github svg {
+				position: relative;
+				fill: white;
+			}
+
+			#github:hover svg {
+				fill: #24292E;
+			}
+
+			#github:hover::before {
+				content: "";
+				position: absolute;
+				display: block;
+				border-radius: 50%;
+				width: 100%;
+				height: 100%;
+				background-color: white;
+			}
+
+			#text {
+				position: absolute;
+				text-transform: uppercase;
+				font-size: 64px;
+				text-align: center;
+				overflow: hidden;
+				text-overflow: clip;
+				word-break: keep-all;
+				margin: 0;
+				top: 50%;
+				left: 0.25em;
+				right: 0.25em;
+				line-height: 1.2em;
+				transform: translateY(-50%);
+			}
+		</style>
+	</head>
+	<body>
+		<h1 id="text">
+			<noscript>
+				cannot chonk without javascript
+			</noscript>
+		</h1>
+		<a id="github" href="https://github.com/JesseSolomon/chonk-text" title="View on GitHub!" target="_blank">
+			<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+				<path fill-rule="evenodd" clip-rule="evenodd" d="M16 0C7.16 0 0 7.16 0 16C0 23.08 4.58 29.06 10.94 31.18C11.74 31.32 12.04 30.84 12.04 30.42C12.04 30.04 12.02 28.78 12.02 27.44C8 28.18 6.96 26.46 6.64 25.56C6.46 25.1 5.68 23.68 5 23.3C4.44 23 3.64 22.26 4.98 22.24C6.24 22.22 7.14 23.4 7.44 23.88C8.88 26.3 11.18 25.62 12.1 25.2C12.24 24.16 12.66 23.46 13.12 23.06C9.56 22.66 5.84 21.28 5.84 15.16C5.84 13.42 6.46 11.98 7.48 10.86C7.32 10.46 6.76 8.82 7.64 6.62C7.64 6.62 8.98 6.2 12.04 8.26C13.32 7.9 14.68 7.72 16.04 7.72C17.4 7.72 18.76 7.9 20.04 8.26C23.1 6.18 24.44 6.62 24.44 6.62C25.32 8.82 24.76 10.46 24.6 10.86C25.62 11.98 26.24 13.4 26.24 15.16C26.24 21.3 22.5 22.66 18.94 23.06C19.52 23.56 20.02 24.52 20.02 26.02C20.02 28.16 20 29.88 20 30.42C20 30.84 20.3 31.34 21.1 31.18C27.42 29.06 32 23.06 32 16C32 7.16 24.84 0 16 0V0Z" fill="inherit"/>
+			</svg>
+		</a>
+		<script>
+			let text = document.getElementById("text");
+
+			text.innerText = decodeURIComponent(location.pathname.split("/").find(seg => seg.length > 0) || "chonk your text!");
+
+			function resizeText() {
+				let length = text.innerText.split(/\s/g).sort((a, b) => b.length - a.length)[0].length || 1;
+
+				text.style.fontSize = Math.min((innerWidth / length), (innerHeight - (innerHeight * 0.1)) / text.innerText.split(" ").length) + "px";
+
+				text.style.transition = text.innerText.length > 4 ? "font-size .2s" : "none";
+			}
+
+			resizeText();
+
+			addEventListener("resize", resizeText);
+
+			let observer = new MutationObserver(() => {
+				history.replaceState(text.innerText, document.title, encodeURIComponent(text.innerText.toLowerCase()) || "/");
+				resizeText();
+			});
+
+			observer.observe(text, {
+				characterData: true,
+				subtree: true
+			});
+
+			// text.addEventListener("keyup", onTextChange);
+			// text.addEventListener("keypress", onTextChange);
+
+			text.setAttribute("contenteditable", "");
+		</script>
+	</body>
+</html>
